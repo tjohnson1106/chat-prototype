@@ -53,6 +53,31 @@ class Fire {
     };
     return message;
   };
+
+  get uid() {
+    return (firebase.auth().currentUser || {}).uid;
+  }
+
+  get timestamp() {
+    return firebase.database.ServerValue.TIMESTAMP;
+  }
+
+  // accepts array of messages -> loop through
+  send = (messages) => {
+    for (let i = 0; i < messages.length; i++) {
+      const { text, user } = messages[i];
+
+      const message = {
+        text,
+        user,
+        timestamp: this.timestamp
+      };
+      this.append(message);
+    }
+  };
+
+  // save the message object with a unique ID
+  append = (message) => this.ref.push(message);
 }
 
 init = () =>
