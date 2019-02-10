@@ -1,14 +1,36 @@
 import React, { Component } from "react";
-import { View, StyleSheet, TextInput } from "react-native";
+import { View, StyleSheet, TextInput, TouchableOpacity, Text } from "react-native";
 
 class Main extends Component {
   state = {
     name: ""
   };
+
+  _onPress = () => {
+    this.props.navigation.navigate("Chat", {
+      name: this.state.name
+    });
+  };
+
+  _onChangeText = (name) =>
+    this.setState({
+      name
+    });
+
   render() {
     return (
       <View>
-        <TextInput style={styles.nameInput} placeholder="name" value={this.state.name} />
+        <Text style={styles.title}>Enter your name:</Text>
+        <TextInput
+          onChangeText={this._onChangeText}
+          style={styles.nameInput}
+          placeholder="name"
+          value={this.state.name}
+        />
+
+        <TouchableOpacity onPress={this._onPress}>
+          <Text style={styles.buttonText}>Next</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -23,6 +45,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: offset,
     borderColor: "#111111",
     borderWidth: 1
+  },
+  title: {
+    marginTop: offset,
+    marginLeft: offset,
+    fontSize: offset
+  },
+  buttonText: {
+    marginLeft: offset,
+    fontSize: offset
   }
 });
 
