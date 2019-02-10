@@ -2,8 +2,8 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { createStackNavigator, createAppContainer } from "react-navigation";
 
-import Chat from "./src/Chat";
-import Main from "./src/Main";
+import Chat from "./src/components/Chat";
+import Main from "./src/components/Main";
 
 const Navigator = createStackNavigator({
   Main: { screen: Main },

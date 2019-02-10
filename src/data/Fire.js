@@ -7,6 +7,16 @@ class Fire {
     this.observeAuth();
   }
 
+  init = () =>
+    firebase.initializeApp({
+      apiKey: "AIzaSyAUsvmXKxW_bKEBJSB2tVc8S9VL6nEkmaI",
+      authDomain: "chat-prototype-57da2.firebaseapp.com",
+      databaseURL: "https://chat-prototype-57da2.firebaseio.com",
+      projectId: "chat-prototype-57da2",
+      storageBucket: "chat-prototype-57da2.appspot.com",
+      messagingSenderId: "443419599727"
+    });
+
   observeAuth = () => firebase.auth().onAuthStateChanged(this._onAuthStateChanged);
 
   _onAuthStateChanged = (user) => {
@@ -79,16 +89,6 @@ class Fire {
   // save the message object with a unique ID
   append = (message) => this.ref.push(message);
 }
-
-init = () =>
-  firebase.initializeApp({
-    apiKey: "AIzaSyAUsvmXKxW_bKEBJSB2tVc8S9VL6nEkmaI",
-    authDomain: "chat-prototype-57da2.firebaseapp.com",
-    databaseURL: "https://chat-prototype-57da2.firebaseio.com",
-    projectId: "chat-prototype-57da2",
-    storageBucket: "chat-prototype-57da2.appspot.com",
-    messagingSenderId: "443419599727"
-  });
 
 Fire.shared = new Fire();
 export default Fire;
