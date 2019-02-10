@@ -19,20 +19,40 @@ class Fire {
     }
   };
 
+  // create reference
   get ref() {
     return firebase.database().ref("messages");
   }
 
+  // call message ref -> last 20 messages
   on = (callback) =>
     this.ref
       .limitToLast(20)
       .on("child_added", (snapshot) => callback(this.parse(snapshot)));
 
+  // parse method
   parse = (snapshot) => {};
 
+  // unsubscribe
   off() {
     this.ref.off();
   }
+
+  // get messages and format
+  parse = (snapshot) => {
+    // snapshot values
+    const { timestamp: numberStamp, text, user } = snapshot.val();
+
+    const { key: _id } = snapshot;
+
+    const message = {
+      _id,
+      timestamp,
+      text,
+      user
+    };
+    return message;
+  };
 }
 
 init = () =>
