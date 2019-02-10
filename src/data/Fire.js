@@ -29,23 +29,13 @@ class Fire {
     }
   };
 
+  get uid() {
+    return (firebase.auth().currentUser || {}).uid;
+  }
+
   // create reference
   get ref() {
     return firebase.database().ref("messages");
-  }
-
-  // call message ref -> last 20 messages
-  on = (callback) =>
-    this.ref
-      .limitToLast(20)
-      .on("child_added", (snapshot) => callback(this.parse(snapshot)));
-
-  // parse method
-  parse = (snapshot) => {};
-
-  // unsubscribe
-  off() {
-    this.ref.off();
   }
 
   // get messages and format
@@ -64,9 +54,11 @@ class Fire {
     return message;
   };
 
-  get uid() {
-    return (firebase.auth().currentUser || {}).uid;
-  }
+  // call message ref -> last 20 messages
+  on = (callback) =>
+    this.ref
+      .limitToLast(20)
+      .on("child_added", (snapshot) => callback(this.parse(snapshot)));
 
   get timestamp() {
     return firebase.database.ServerValue.TIMESTAMP;
@@ -88,6 +80,11 @@ class Fire {
 
   // save the message object with a unique ID
   append = (message) => this.ref.push(message);
+
+  // unsubscribe/close connection
+  off() {
+    this.ref.off();
+  }
 }
 
 Fire.shared = new Fire();
